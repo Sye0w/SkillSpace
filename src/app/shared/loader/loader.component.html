@@ -1,8 +1,8 @@
 <button
-      [disabled]="isLoading"
-      [class]="buttonClass"
-      (click)="onClick()"
-    >
+    [disabled]="isLoading"
+    [class]="buttonClass"
+    (click)="onClick()"
+  >
   <ng-container *ngIf="!isLoading">
     <ng-content></ng-content>
   </ng-container>

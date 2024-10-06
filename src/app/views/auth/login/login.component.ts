@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
       }, 2000);
     } else {
       this.loginForm.markAllAsTouched();
-      this.toastMessage = 'Please fill all required fields';
+      this.toastMessage = 'Invalid input(s), please all required fields';
       this.isError = true;
       this.showToast = true;
     }

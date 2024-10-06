@@ -1,0 +1,38 @@
+<main>
+  <section class="login-grp-1">
+    <button type="button">
+      <img src="../../../../assets/images/google_logo.svg" alt="">
+      Continue with google
+    </button>
+    <div class="divider">
+      <mat-divider></mat-divider>
+      <span>OR</span>
+      <mat-divider></mat-divider>
+    </div>
+  </section>
+  <section class="login-grp-2">
+    <h3>Welcome back!, Login to your account</h3>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ng-container *ngFor="let input of loginInputConfig">
+        <app-dynamic-input-field
+          [config]="input"
+          [parentForm]="loginForm"
+          (errorMessageChange)="onErrorMessageChange($event)"
+        />
+      </ng-container>
+      <a [routerLink]="['forgot-password']">Forgot password?</a>
+      <app-toast *ngIf="showToast" [message]="toastMessage" [isError]="isError"></app-toast>
+      <app-loader
+        [isLoading]="isLoading"
+        [buttonClass]="'login-button'"
+        (buttonClick)="login()"
+      >
+        Login
+      </app-loader>
+    </form>
+    <p class="login-grp-3">
+      Don't have an account?
+      <a routerLink="../register" class="link-effect">Sign up instead</a>
+    </p>
+  </section>
+</main>

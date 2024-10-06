@@ -22,7 +22,13 @@
       </ng-container>
       <a>Forgot password?</a>
       <app-toast *ngIf="showToast" [message]="toastMessage" [isError]="isError"></app-toast>
-      <button type="submit">Login</button>
+      <app-loader
+        [isLoading]="isLoading"
+        [buttonClass]="'login-button'"
+        (buttonClick)="login()"
+      >
+        Login
+      </app-loader>
     </form>
     <p class="login-grp-3">
       Don't have an account?

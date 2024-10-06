@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { FormValidationService } from '../../services/form-validation.service';
+
 
 @Component({
   selector: 'app-dynamic-input-field',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './dynamic-input-field.component.html',
-  styleUrl: './dynamic-input-field.component.scss'
+  styleUrl: './dynamic-input-field.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicInputFieldComponent implements OnInit {
   @Input() config: any;
@@ -15,27 +18,25 @@ export class DynamicInputFieldComponent implements OnInit {
   @Output() errorMessageChange = new EventEmitter<string>();
   control!: AbstractControl;
 
+  constructor(private formValidation: FormValidationService) {}
+
   ngOnInit() {
     this.control = this.parentForm.get(this.config.name)!;
+
+    if (this.config.type === 'password') {
+      this.control.setValidators([
+        ...this.config.validators,
+        this.formValidation.passwordStrCheck()
+      ]);
+    }
+
     this.control.statusChanges.subscribe(() => {
       if (this.control.invalid && (this.control.dirty || this.control.touched)) {
-        this.errorMessageChange.emit(this.errorMessage);
+        const errorMessage = this.formValidation.getErrorMessage(this.control, this.config.label);
+        this.errorMessageChange.emit(errorMessage);
       } else {
         this.errorMessageChange.emit('');
       }
     });
-  }
-
-  get errorMessage(): string {
-    if (this.control.hasError('required')) {
-      return `${this.config.label} is required`;
-    }
-    if (this.control.hasError('email')) {
-      return 'Please enter a valid email address';
-    }
-    if (this.control.hasError('minlength')) {
-      return `${this.config.label} must be at least ${this.control.errors?.['minlength'].requiredLength} characters long`;
-    }
-    return '';
   }
 }

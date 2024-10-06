@@ -18,16 +18,10 @@
           [config]="input"
           [parentForm]="loginForm"
           (errorMessageChange)="onErrorMessageChange($event)"
-        ></app-dynamic-input-field>
+        />
       </ng-container>
       <a>Forgot password?</a>
-      <div class="toast" *ngIf="showToast" [ngClass]="{'error': isError, 'success': !isError}">
-        <div>
-          <img [src]="isError ? '../../../../assets/images/error.svg' : '../../../../assets/images/success.svg'" alt="">
-          <span>{{ isError ? 'Error' : 'Success' }}</span>
-        </div>
-        <p>{{ toastMessage }}</p>
-      </div>
+      <app-toast *ngIf="showToast" [message]="toastMessage" [isError]="isError"></app-toast>
       <button type="submit">Login</button>
     </form>
     <p class="login-grp-3">

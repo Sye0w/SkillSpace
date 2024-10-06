@@ -1,0 +1,7 @@
+<div  class="toast" [ngClass]="{'error': isError, 'success': !isError}">
+  <div>
+    <img [src]="isError ? '../../../../assets/images/error.svg' : '../../../../assets/images/success.svg'" alt="">
+    <span>{{ isError ? 'Error' : 'Success' }}</span>
+  </div>
+  <p>{{ message }}</p>
+</div>

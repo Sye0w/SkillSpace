@@ -1,20 +1,28 @@
-// login.component.ts
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { DynamicInputFieldComponent } from "../../../shared/dynamic-input-field/dynamic-input-field.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { ToastComponent } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatDividerModule, DynamicInputFieldComponent,
-    ReactiveFormsModule, CommonModule, MatButtonModule],
+  imports: [
+    MatDividerModule,
+    DynamicInputFieldComponent,
+    ReactiveFormsModule,
+    CommonModule,
+    MatButtonModule,
+    ToastComponent
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   showToast = false;
@@ -47,19 +55,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  hideToast() {
-    setTimeout(() => {
-      this.showToast = false;
-    }, 5000);
-  }
-
   login() {
     if (this.loginForm.valid) {
       console.log('Login details:', JSON.stringify(this.loginForm.value));
       this.showToast = true;
       this.isError = false;
       this.toastMessage = 'Login successful!';
-      this.hideToast();
     } else {
       this.loginForm.markAllAsTouched();
       this.toastMessage = 'Please fill all required fields';
@@ -73,7 +74,6 @@ export class LoginComponent implements OnInit {
       this.showToast = true;
       this.isError = true;
       this.toastMessage = message;
-      this.hideToast();
     } else {
       this.showToast = false;
     }

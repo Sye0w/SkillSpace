@@ -1,0 +1,9 @@
+<div [formGroup]="parentForm">
+  <label [for]="config.name">{{ config.label }}</label>
+  <input
+    [type]="config.type"
+    [id]="config.name"
+    [placeholder]="config.placeholder"
+    [formControlName]="config.name"
+  />
+</div>

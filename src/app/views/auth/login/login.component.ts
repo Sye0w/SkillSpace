@@ -1,3 +1,4 @@
+// login.component.ts
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { DynamicInputFieldComponent } from "../../../shared/dynamic-input-field/dynamic-input-field.component";
@@ -8,15 +9,17 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatDividerModule,DynamicInputFieldComponent,
-    ReactiveFormsModule, CommonModule,MatButtonModule],
+  imports: [MatDividerModule, DynamicInputFieldComponent,
+    ReactiveFormsModule, CommonModule, MatButtonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  showToast = false;
+  toastMessage = '';
+  isError = false;
 
   loginInputConfig = [
     {
@@ -35,18 +38,44 @@ export class LoginComponent implements OnInit {
     },
   ];
 
-  constructor(private fb:FormBuilder){}
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(){
-    this.loginForm = this.fb.group({})
-    this.loginInputConfig.forEach( config =>{
-      this.loginForm.addControl(config.name,this.fb.control('', config.validators))
-    })
+  ngOnInit() {
+    this.loginForm = this.fb.group({});
+    this.loginInputConfig.forEach(config => {
+      this.loginForm.addControl(config.name, this.fb.control('', config.validators));
+    });
+  }
+
+  hideToast() {
+    setTimeout(() => {
+      this.showToast = false;
+    }, 5000);
   }
 
   login() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      console.log('Login details:', JSON.stringify(this.loginForm.value));
+      this.showToast = true;
+      this.isError = false;
+      this.toastMessage = 'Login successful!';
+      this.hideToast();
+    } else {
+      this.loginForm.markAllAsTouched();
+      this.toastMessage = 'Please fill all required fields';
+      this.isError = true;
+      this.showToast = true;
+    }
+  }
+
+  onErrorMessageChange(message: string) {
+    if (message) {
+      this.showToast = true;
+      this.isError = true;
+      this.toastMessage = message;
+      this.hideToast();
+    } else {
+      this.showToast = false;
     }
   }
 }

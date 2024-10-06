@@ -1,6 +1,6 @@
 <main>
   <section class="login-grp-1">
-    <button type="button" >
+    <button type="button">
       <img src="../../../../assets/images/google_logo.svg" alt="">
       Continue with google
     </button>
@@ -17,13 +17,21 @@
         <app-dynamic-input-field
           [config]="input"
           [parentForm]="loginForm"
+          (errorMessageChange)="onErrorMessageChange($event)"
         ></app-dynamic-input-field>
       </ng-container>
       <a>Forgot password?</a>
-      <button type="submit" [disabled]="!loginForm.valid">Login</button>
+      <div class="toast" *ngIf="showToast" [ngClass]="{'error': isError, 'success': !isError}">
+        <div>
+          <img [src]="isError ? '../../../../assets/images/error.svg' : '../../../../assets/images/success.svg'" alt="">
+          <span>{{ isError ? 'Error' : 'Success' }}</span>
+        </div>
+        <p>{{ toastMessage }}</p>
+      </div>
+      <button type="submit">Login</button>
     </form>
     <p class="login-grp-3">
-      Don’t have an account?
+      Don't have an account?
       <a routerLink="#" class="link-effect">Sign up instead</a>
     </p>
   </section>

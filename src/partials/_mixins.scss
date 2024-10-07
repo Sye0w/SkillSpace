@@ -32,3 +32,37 @@
     font-family: $poppins;
   }
 }
+
+
+@mixin link-effect($color: #DD5928, $height: 0.7px, $transition: 0.5s) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: $height;
+    background: $color;
+    transform: scaleX(0);
+    transition: transform $transition ease;
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@mixin pop-in-animation {
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.7) translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+}

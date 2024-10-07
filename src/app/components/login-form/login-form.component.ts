@@ -72,12 +72,18 @@ export class LoginFormComponent {
         this.toastMessage = 'Login successful!';
         this.isLoading = false;
         this.cdr.detectChanges();
+        setTimeout(() => {
+          this.showToast = false;
+        }, 5000);
       }, 2000);
     } else {
       this.loginForm.markAllAsTouched();
       this.toastMessage = 'Invalid input(s), please all required fields';
       this.isError = true;
       this.showToast = true;
+      setTimeout(() => {
+        this.showToast = false;
+      }, 5000);
     }
   }
 

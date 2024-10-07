@@ -21,10 +21,10 @@
         />
       </ng-container>
       <a [routerLink]="['forgot-password']">Forgot password?</a>
-      <app-toast *ngIf="showToast" [message]="toastMessage" [isError]="isError"></app-toast>
+      <app-toast *ngIf="showToast" [message]="toastMessage" [isError]="isError"/>
       <app-loader
         [isLoading]="isLoading"
-        [buttonClass]="'login-button'"
+        [buttonClass]="'button'"
         (buttonClick)="login()"
       >
         Login

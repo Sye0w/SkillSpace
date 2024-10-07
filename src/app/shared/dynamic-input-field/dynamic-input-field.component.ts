@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { FormValidationService } from '../../services/form-validation.service';
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-dynamic-input-field',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,MatIconModule],
   templateUrl: './dynamic-input-field.component.html',
   styleUrls: ['./dynamic-input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
